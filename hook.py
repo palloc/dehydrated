@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import commands
 import requests
 import json
 import sys
@@ -47,12 +46,14 @@ def Get_Info_URL():
 def Gen_Postdata(info_url):
     try:
         data = requests.get(info_url, auth=(user, password)).json()
+        print data
     except requests.exceptions.RequestException as e:
         print(e)
         sys.exit(1)
         
 
-    del data["CommonServiceItem"]["ID"], \
+    del data["is_ok"], \
+        data["CommonServiceItem"]["ID"], \
         data["CommonServiceItem"]["Name"], \
         data["CommonServiceItem"]["Description"], \
         data["CommonServiceItem"]["SettingsHash"], \
@@ -74,10 +75,13 @@ def Gen_Postdata(info_url):
 # Deploy Challenge
 if sys.argv[1] == "deploy_challenge":
     domain = Create_Domain(sys.argv[2])
-
+    print domain
+    
     info_url = Get_Info_URL()
     post_data = Gen_Postdata(info_url)
-    
+    print info_url
+
+    print post_data
 
     # Add TXT record to post data
     post_data["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"] += [{"Name": domain, "Type": "TXT", "RData": sys.argv[4], "TTL": 600}]
@@ -85,14 +89,16 @@ if sys.argv[1] == "deploy_challenge":
 
     # Regist TXT record
     try:
-        res = requests.post(info_url, \
+        res = requests.put(info_url, \
                             json.dumps(post_data), \
                             auth=(user, password), \
                             headers={'Content-Type': 'application/json'})
     except requests.exceptions.RequestException as e:
         print(e)
         sys.exit(1)
-
+    print json.dumps(post_data)
+    print res.json()
+    raw_input("wait...")
     print "fin deploy."
     
 
@@ -116,7 +122,7 @@ elif sys.argv[1] == "clean_challenge":
     del post_data["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"][i]
     
     try:
-        res = requests.post(info_url, \
+        res = requests.put(info_url, \
                             json.dumps(post_data), \
                             auth=(user, password), \
                             headers={'Content-Type': 'application/json'})    
