@@ -46,7 +46,6 @@ def Get_Info_URL():
 def Gen_Postdata(info_url):
     try:
         data = requests.get(info_url, auth=(user, password)).json()
-        print data
     except requests.exceptions.RequestException as e:
         print(e)
         sys.exit(1)
@@ -75,16 +74,16 @@ def Gen_Postdata(info_url):
 # Deploy Challenge
 if sys.argv[1] == "deploy_challenge":
     domain = Create_Domain(sys.argv[2])
-    print domain
+    print("domain = "+domain)
     
     info_url = Get_Info_URL()
     post_data = Gen_Postdata(info_url)
-    print info_url
 
-    print post_data
+
 
     # Add TXT record to post data
     post_data["CommonServiceItem"]["Settings"]["DNS"]["ResourceRecordSets"] += [{"Name": domain, "Type": "TXT", "RData": sys.argv[4], "TTL": 600}]
+
 
 
     # Regist TXT record
@@ -96,10 +95,9 @@ if sys.argv[1] == "deploy_challenge":
     except requests.exceptions.RequestException as e:
         print(e)
         sys.exit(1)
-    print json.dumps(post_data)
-    print res.json()
-    raw_input("wait...")
-    print "fin deploy."
+    print("post data = "+json.dumps(post_data))
+    time.sleep(20)
+    print("fin deploy.")
     
 
 
