@@ -5,11 +5,14 @@ import json
 import sys
 import time
 
-f = open("apifile.data", "r")
+f = open("APIfile.data", "r")
 user, password = f.read().split('\n')
 zone = ''
 
 
+
+
+# Create subdomain for DNS auth
 def Create_Domain(name):
     zone_tmp = name.split(".")
     zone = zone_tmp[-2] + "." + zone_tmp[-1]
