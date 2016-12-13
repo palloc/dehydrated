@@ -5,9 +5,9 @@ import json
 import sys
 import time
 
-user=''
-password=''
-zone = ""
+f = open("apifile.data", "r")
+user, password = f.read().split('\n')
+zone = ''
 
 
 def Create_Domain(name):
