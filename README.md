@@ -20,6 +20,17 @@ Current features:
 Please keep in mind that this software and even the acme-protocol are relatively young and may still have some unresolved issues.
 Feel free to report any issues you find with this script or contribute by submitting a pullrequest.
 
+## Usage (Sakura Internet's DNS version):
+
+```text
+$ git clone https://github.com/palloc/dehydrated.git
+$ cd dehydrated
+$ python gen_info.py [API Access Token] [Access Token's Secret key]
+$ ./letsencrypt.sh -c -d [Your domain] -challenge dns-01 -k ./hook.py
+```
+
+If you register last command with cron, you can use SSL certificate permanently.
+
 ### Getting started
 
 For getting started I recommend taking a look at [docs/domains_txt.md](docs/domains_txt.md), [docs/wellknown.md](docs/wellknown.md) and the [Usage](#usage) section on this page (you'll probably only need the `-c` option).
