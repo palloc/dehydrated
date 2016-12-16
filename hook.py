@@ -99,7 +99,7 @@ if sys.argv[1] == "deploy_challenge":
         print(e)
         sys.exit(1)
     print("post data = "+json.dumps(post_data))
-    time.sleep(20)
+    time.sleep(60)
     print("fin deploy.")
     
 
