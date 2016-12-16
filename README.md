@@ -26,7 +26,7 @@ Feel free to report any issues you find with this script or contribute by submit
 $ git clone https://github.com/palloc/dehydrated.git
 $ cd dehydrated
 $ python gen_info.py [API Access Token] [Access Token's Secret key]
-$ ./letsencrypt.sh -c -d [Your domain] -challenge dns-01 -k ./hook.py
+$ ./letsencrypt.sh -c -d [Your domain] --challenge dns-01 -k ./hook.py
 ```
 
 If you register last command with cron, you can use SSL certificate permanently.
